@@ -2,6 +2,8 @@
 
 namespace Lake\Admin\RedisManager\DataType;
 
+use Illuminate\Support\Arr;
+
 class SortedSets extends DataType
 {
     /**
@@ -14,17 +16,17 @@ class SortedSets extends DataType
 
     public function update(array $params)
     {
-        $key = array_get($params, 'key');
+        $key = Arr::get($params, 'key');
 
-        if (array_has($params, 'member')) {
-            $member = array_get($params, 'member');
-            $score = array_get($params, 'score');
+        if (Arr::has($params, 'member')) {
+            $member = Arr::get($params, 'member');
+            $score = Arr::get($params, 'score');
             $this->getClient()->zadd($key, [$member => $score]);
         }
 
-        if (array_has($params, '_editable')) {
-            $score = array_get($params, 'value');
-            $member = array_get($params, 'pk');
+        if (Arr::has($params, '_editable')) {
+            $score = Arr::get($params, 'value');
+            $member = Arr::get($params, 'pk');
 
             $this->getClient()->zadd($key, [$member => $score]);
         }
@@ -35,21 +37,16 @@ class SortedSets extends DataType
      */
     public function store(array $params)
     {
-        $key = array_get($params, 'key');
-        $ttl = array_get($params, 'ttl');
-        $score = array_get($params, 'score');
-        $member = array_get($params, 'member');
+        $key = Arr::get($params, 'key');
+        $ttl = Arr::get($params, 'ttl');
+        $score = Arr::get($params, 'score');
+        $member = Arr::get($params, 'member');
 
         $this->getClient()->zadd($key, [$member => $score]);
 
         if ($ttl > 0) {
             $this->getClient()->expire($key, $ttl);
         }
-
-        return redirect(route('redis-edit-key', [
-            'conn' => request('conn'),
-            'key'  => $key,
-        ]));
     }
 
     /**
@@ -61,8 +58,8 @@ class SortedSets extends DataType
      */
     public function remove(array $params)
     {
-        $key = array_get($params, 'key');
-        $member = array_get($params, 'member');
+        $key = Arr::get($params, 'key');
+        $member = Arr::get($params, 'member');
 
         return $this->getClient()->zrem($key, $member);
     }

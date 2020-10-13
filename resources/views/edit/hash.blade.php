@@ -84,7 +84,7 @@
                                 <tr>
                                     <td>{{ $field }}</td>
                                     <td>
-                                        <a class="hash-field" data-type="textarea" data-pk="{{ $field }}" data-url="{{ route('redis-update-key', ['type' => 'hash', 'conn' => $conn, 'key' => $data['key']]) }}">{{ $value }}</a></td>
+                                        <a class="hash-field" data-type="textarea" data-pk="{{ $field }}" data-url="{{ route('lake-redis-update-key', ['type' => 'hash', 'conn' => $conn, 'key' => $data['key']]) }}">{{ $value }}</a></td>
                                     <td>
                                         <a href="#" class="text-red remove-key" data-field="{{ $field }}"><i class="fa fa-trash"></i></a>
                                     </td>
@@ -128,7 +128,7 @@
                         };
 
                         $.ajax({
-                            url: '{{ route('redis-remove-item') }}',
+                            url: '{{ route('lake-redis-remove-item') }}',
                             type: 'DELETE',
                             data: params,
                             success: function(result) {
@@ -160,7 +160,7 @@
                 };
 
                 $.ajax({
-                    url: '{{ route('redis-update-key') }}',
+                    url: '{{ route('lake-redis-update-key') }}',
                     type: 'PUT',
                     data: params,
                     success: function(result) {
@@ -188,7 +188,7 @@
                 };
 
                 $.ajax({
-                    url: '{{ route('redis-update-key') }}',
+                    url: '{{ route('lake-redis-update-key') }}',
                     type: 'PUT',
                     data: params,
                     success: function(result) {

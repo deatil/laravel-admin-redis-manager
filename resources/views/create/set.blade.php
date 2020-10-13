@@ -20,7 +20,7 @@
         </div>
 
 
-        <form class="form-horizontal" method="post" action="{{ route('redis-store-key') }}" pjax-container>
+        <form class="form-horizontal" method="post" action="{{ route('lake-redis-store-key') }}" pjax-container>
 
             <div class="box-body">
 
@@ -53,6 +53,7 @@
                 {{ csrf_field() }}
                 <input type="hidden" name="conn" value="{{ $conn }}">
                 <input type="hidden" name="type" value="set">
+                <input type="hidden" name="redirect" value="1">
 
             </div>
 

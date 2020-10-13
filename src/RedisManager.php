@@ -13,12 +13,13 @@ use Predis\Pipeline\Pipeline;
 use Predis\Collection\Iterator\Keyspace;
 
 use Encore\Admin\Extension;
-use Encore\Admin\RedisManager\DataType\DataType;
-use Encore\Admin\RedisManager\DataType\Hashes;
-use Encore\Admin\RedisManager\DataType\Lists;
-use Encore\Admin\RedisManager\DataType\Sets;
-use Encore\Admin\RedisManager\DataType\SortedSets;
-use Encore\Admin\RedisManager\DataType\Strings;
+
+use Lake\Admin\RedisManager\DataType\DataType;
+use Lake\Admin\RedisManager\DataType\Hashes;
+use Lake\Admin\RedisManager\DataType\Lists;
+use Lake\Admin\RedisManager\DataType\Sets;
+use Lake\Admin\RedisManager\DataType\SortedSets;
+use Lake\Admin\RedisManager\DataType\Strings;
 
 /**
  * Class RedisManager.
@@ -150,7 +151,7 @@ class RedisManager extends Extension
             $this->connection = $connection;
         }
 
-        return Redis::connection($this->connection);
+        return $this->getClient();
     }
 
     /**
@@ -160,7 +161,8 @@ class RedisManager extends Extension
      */
     public function getClient()
     {
-        return new Client($this->connection);
+        $param = $this->getConnections()[$this->connection];
+        return new Client($param);
     }
 
     /**
@@ -223,13 +225,17 @@ LUA;
         }
 
         $type = $client->type($key)->__toString();
+        if ($type == 'list') {
+            $type = 'lists';
+        }
 
         /** @var DataType $class */
         $class = $this->{$type}();
 
-        $prefix = config('database.redis.options.prefix');
+        $options = $this->getConnections()['options'];
+        $prefix = $options['prefix'];
         if($prefix){
-            $key = ltrim($key,$prefix);
+            $key = ltrim($key, $prefix);
         }
         $value = $class->fetch($key);
         $ttl = $class->ttl($key);

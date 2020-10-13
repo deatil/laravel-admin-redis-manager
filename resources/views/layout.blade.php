@@ -15,7 +15,7 @@
                     @foreach($connections as $name => $connection)
                         @if(!empty($connection['host']))
                         <li @if($name == $conn)class="active"@endif>
-                            <a href=" {{ route('redis-index', ['conn' => $name]) }}">
+                            <a href=" {{ route('lake-redis-index', ['conn' => $name]) }}">
                                 <i class="fa fa-database"></i> {{ $name }}  &nbsp;&nbsp;<small>[{{ $connection['host'].':'.$connection['port'] }}]</small>
                             </a>
                         </li>

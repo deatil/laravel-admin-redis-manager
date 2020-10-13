@@ -9,7 +9,7 @@ class Hashes extends DataType
      */
     public function fetch($key)
     {
-        return $this->getClient()->hgetall($key);
+        return $this->getClient()->hGetAll($key);
     }
 
     /**

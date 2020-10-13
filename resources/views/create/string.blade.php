@@ -7,7 +7,7 @@
         <h3 class="box-title">Create</h3> <small></small>
     </div>
 
-    <form class="form-horizontal" method="post" action="{{ route('redis-store-key') }}" pjax-container>
+    <form class="form-horizontal" method="post" action="{{ route('lake-redis-store-key') }}" pjax-container>
         <div class="box-body">
             <div class="form-group">
                 <label for="inputKey" class="col-sm-2 control-label">Key</label>
@@ -34,6 +34,7 @@
             {{ csrf_field() }}
             <input type="hidden" name="conn" value="{{ $conn }}">
             <input type="hidden" name="type" value="string">
+            <input type="hidden" name="redirect" value="1">
         </div>
         <!-- /.box-body -->
 

@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <form class="form-horizontal" action="{{ route('redis-index') }}" pjax-container>
+    <form class="form-horizontal" action="{{ route('lake-redis-index') }}" pjax-container>
         <div class="box-body">
             <div class="form-group">
                 <label for="inputPattern" class="col-sm-2 control-label">Pattern</label>
@@ -30,7 +30,7 @@
 
                     <a class="btn btn-danger btn-sm pull-right key-delete-multi"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</a>
 
-                    <a class="btn btn-warning btn-sm pull-right"  style="margin-right: 5px;" href="{{ route('redis-console', ['conn' => $conn]) }}"><i class="fa fa-terminal"></i>&nbsp;&nbsp;Console</a>
+                    <a class="btn btn-warning btn-sm pull-right"  style="margin-right: 5px;" href="{{ route('lake-redis-console', ['conn' => $conn]) }}"><i class="fa fa-terminal"></i>&nbsp;&nbsp;Console</a>
 
                     <div class="btn-group pull-right btn-group-sm" style="margin-right: 5px;">
                         <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;&nbsp;Create</button>
@@ -39,11 +39,11 @@
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('redis-create-key', ['conn' => $conn, 'type' => 'string']) }}">string</a></li>
-                            <li><a href="{{ route('redis-create-key', ['conn' => $conn, 'type' => 'list']) }}">list</a></li>
-                            <li><a href="{{ route('redis-create-key', ['conn' => $conn, 'type' => 'hash']) }}">hash</a></li>
-                            <li><a href="{{ route('redis-create-key', ['conn' => $conn, 'type' => 'set']) }}">set</a></li>
-                            <li><a href="{{ route('redis-create-key', ['conn' => $conn, 'type' => 'zset']) }}">zset</a></li>
+                            <li><a href="{{ route('lake-redis-create-key', ['conn' => $conn, 'type' => 'string']) }}">string</a></li>
+                            <li><a href="{{ route('lake-redis-create-key', ['conn' => $conn, 'type' => 'list']) }}">list</a></li>
+                            <li><a href="{{ route('lake-redis-create-key', ['conn' => $conn, 'type' => 'hash']) }}">hash</a></li>
+                            <li><a href="{{ route('lake-redis-create-key', ['conn' => $conn, 'type' => 'set']) }}">set</a></li>
+                            <li><a href="{{ route('lake-redis-create-key', ['conn' => $conn, 'type' => 'zset']) }}">zset</a></li>
                         </ul>
                     </div>
                 </div>
@@ -75,11 +75,11 @@
                     <td><code>{{ $key[0] }}</code></td>
                     <td>
                         @php($type = $key[1]->getPayload())
-                            <span class="label label-{{ \Encore\Admin\RedisManager\RedisManager::typeColor($type) }}">{{ $type }}</span>
+                            <span class="label label-{{ \Lake\Admin\RedisManager\RedisManager::typeColor($type) }}">{{ $type }}</span>
                     </td>
                     <td>{{ $key[2] }}</td>
                     <td>
-                        <a href="{{ route('redis-edit-key', ['key' => $key[0], 'conn' => $conn]) }}"><i class="fa fa-edit"></i></a>
+                        <a href="{{ route('lake-redis-edit-key', ['key' => $key[0], 'conn' => $conn]) }}"><i class="fa fa-edit"></i></a>
                         &nbsp;
                         <a href="#" class="key-delete" data-key="{{ $key[0] }}"><i class="fa fa-trash"></i></a>
                     </td>
@@ -121,7 +121,7 @@
                         };
 
                         $.ajax({
-                            url: '{{ route('redis-key-delete') }}',
+                            url: '{{ route('lake-redis-key-delete') }}',
                             type: 'DELETE',
                             data: params,
                             success: function (result) {
@@ -156,7 +156,7 @@
                         };
 
                         $.ajax({
-                            url: '{{ route('redis-key-delete') }}',
+                            url: '{{ route('lake-redis-key-delete') }}',
                             type: 'DELETE',
                             data: params,
                             success: function (result) {

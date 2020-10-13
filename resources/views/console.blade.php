@@ -12,7 +12,7 @@
             });
 
             var storageKey = function () {
-                return 'redis-history'
+                return 'lake-redis-history'
             };
 
             function History () {
@@ -68,7 +68,7 @@
                 var $input = $('#console-query');
 
                 $.ajax({
-                    url: '{{ route('redis-execute', ['conn' => $conn]) }}',
+                    url: '{{ route('lake-redis-execute', ['conn' => $conn]) }}',
                     method: 'post',
                     data: {
                         conn: '{{ $conn }}',

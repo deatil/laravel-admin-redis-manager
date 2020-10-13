@@ -24,7 +24,6 @@ class RedisController extends BaseController
             $content->breadcrumb(['text' => 'Redis manager']);
             $connection = request('conn', 'default');
             $manager = $this->manager();
-            // dd($manager->getConnections());
             $variables = [
                 'conn'        => $connection,
                 'info'        => $manager->getInformation(),
@@ -68,7 +67,7 @@ class RedisController extends BaseController
             $content->header('Redis manager');
             $content->description('Connections');
             $content->breadcrumb(
-                ['text' => 'Redis manager', 'url' => route('redis-index', ['conn' => $connection])],
+                ['text' => 'Redis manager', 'url' => route('lake-redis-index', ['conn' => $connection])],
                 ['text' => 'Edit']
             );
             $content->body(view($view, $variables));
@@ -101,7 +100,7 @@ class RedisController extends BaseController
             $content->header('Redis manager');
             $content->description('Connections');
             $content->breadcrumb(
-                ['text' => 'Redis manager', 'url' => route('redis-index', ['conn' => $connection])],
+                ['text' => 'Redis manager', 'url' => route('lake-redis-index', ['conn' => $connection])],
                 ['text' => 'Create']
             );
             $content->body(view($view, $vars));
@@ -118,10 +117,13 @@ class RedisController extends BaseController
         $type = $request->get('type');
 
         $this->manager()->{$type}()->store($request->all());
-        return redirect(route('redis-index', [
-            'conn' => request('conn'),
-        ]));
-
+        
+        $redirect = $request->get('redirect');
+        if ($redirect == 1) {
+            return redirect(route('lake-redis-index', [
+                'conn' => request('conn'),
+            ]));
+        }
     }
 
     /**
@@ -164,11 +166,18 @@ class RedisController extends BaseController
     public function update(Request $request)
     {
         $type = $request->get('type');
+        if ($type == 'list') {
+            $type = 'lists';
+        }
 
         $this->manager()->{$type}()->update($request->all());
-        return redirect(route('redis-index', [
-            'conn' => request('conn'),
-        ]));
+        
+        $redirect = $request->get('redirect');
+        if ($redirect == 1) {
+            return redirect(route('lake-redis-index', [
+                'conn' => request('conn'),
+            ]));
+        }
     }
 
     /**
@@ -196,7 +205,7 @@ class RedisController extends BaseController
             $content->header('Redis manager');
             $content->description('Connections');
             $content->breadcrumb(
-                ['text' => 'Redis manager', 'url' => route('redis-index', ['conn' => $connection])],
+                ['text' => 'Redis manager', 'url' => route('lake-redis-index', ['conn' => $connection])],
                 ['text' => 'Console']
             );
             $content->body(view($view, $vars));

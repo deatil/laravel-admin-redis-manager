@@ -2,7 +2,7 @@
 
 namespace Lake\Admin\RedisManager;
 
-use Lake\Admin\Facades\Admin;
+use Encore\Admin\Admin;
 
 trait BootExtension
 {

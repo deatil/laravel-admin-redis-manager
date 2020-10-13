@@ -78,7 +78,7 @@
                                 <tr>
                                     <td>{{ $index }}</td>
                                     <td>
-                                        <a class="list-item" data-type="textarea" data-pk="{{ $index }}" data-url="{{ route('redis-update-key', ['type' => 'list', 'conn' => $conn, 'key' => $data['key']]) }}">{{ $value }}</a></td>
+                                        <a class="list-item" data-type="textarea" data-pk="{{ $index }}" data-url="{{ route('lake-redis-update-key', ['type' => 'list', 'conn' => $conn, 'key' => $data['key']]) }}">{{ $value }}</a></td>
                                     <td>
                                         <a href="#" class="text-red remove-index" data-index="{{ $index }}"><i class="fa fa-trash"></i></a>
                                     </td>
@@ -123,7 +123,7 @@
                         };
 
                         $.ajax({
-                            url: '{{ route('redis-remove-item') }}',
+                            url: '{{ route('lake-redis-remove-item') }}',
                             type: 'DELETE',
                             data: params,
                             success: function(result) {
@@ -155,13 +155,13 @@
                 };
 
                 $.ajax({
-                    url: '{{ route('redis-update-key') }}',
+                    url: '{{ route('lake-redis-update-key') }}',
                     type: 'PUT',
                     data: params,
                     success: function(result) {
                         toastr.success('Push success.');
 //                    $.pjax.reload('#pjax-container');
-                        $.pjax({container:'#pjax-container', url: '{{ route('redis-edit-key') }}' + '?conn={{ $conn }}&key='+key });
+                        $.pjax({container:'#pjax-container', url: '{{ route('lake-redis-edit-key') }}' + '?conn={{ $conn }}&key='+key });
                     }
                 });
 
@@ -184,7 +184,7 @@
                 };
 
                 $.ajax({
-                    url: '{{ route('redis-update-key') }}',
+                    url: '{{ route('lake-redis-update-key') }}',
                     type: 'PUT',
                     data: params,
                     success: function(result) {

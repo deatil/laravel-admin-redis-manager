@@ -89,12 +89,12 @@
                     };
 
                     $.ajax({
-                        url: '{{ route('redis-update-key') }}',
+                        url: '{{ route('lake-redis-update-key') }}',
                         type: 'PUT',
                         data: params,
                         success: function(result) {
                             toastr.success('Push success.');
-//                            $.pjax.reload('#pjax-container');
+                            $.pjax.reload('#pjax-container');
                         }
                     });
                 }
@@ -111,12 +111,12 @@
                 };
 
                 $.ajax({
-                    url: '{{ route('redis-remove-item') }}',
+                    url: '{{ route('lake-redis-remove-item') }}',
                     type: 'DELETE',
                     data: params,
                     success: function(result) {
                         toastr.success('List item removed');
-//                        $.pjax.reload('#pjax-container');
+                        $.pjax.reload('#pjax-container');
                     }
                 });
 
@@ -137,7 +137,7 @@
                 };
 
                 $.ajax({
-                    url: '{{ route('redis-update-key') }}',
+                    url: '{{ route('lake-redis-update-key') }}',
                     type: 'PUT',
                     data: params,
                     success: function(result) {
