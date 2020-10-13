@@ -1,0 +1,35 @@
+{
+    "name": "lake/redis-manager",
+    "description": "Redis manager for laravel-admin",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "deatil",
+            "email": "deatil@github.com",
+            "homepage": "https://github.com/deatil"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require" : {
+        "php" : ">=7.2.0",
+        "encore/laravel-admin" : "1.8.*",
+        "predis/predis" : "~1.0"
+    },
+    "require-dev" : {
+        "phpunit/phpunit" : "~6.0",
+        "laravel/laravel" : "~6.0"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Lake\\Admin\\RedisManager\\" : "src/"
+        }
+    },
+    "extra" : {
+        "laravel" : {
+            "providers" : [
+                "Lake\\Admin\\RedisManager\\RedisManagerServiceProvider"
+            ]
+        }
+    }
+}
