@@ -8,7 +8,7 @@ Redis manager for laravel-admin
 ## Installation
 
 ```
-$ composer require lake/lake-redis-manager
+$ composer require lake/redis-manager
 
 $ php artisan admin:import lake-redis-manager
 ```
