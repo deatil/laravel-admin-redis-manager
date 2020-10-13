@@ -22,7 +22,7 @@
     },
     "autoload" : {
         "psr-4" : {
-            "Lake\\Admin\\RedisManager\\" : "src/"
+            "Lake\\Admin\\RedisManager\\" : "src/manager/"
         }
     },
     "extra" : {
