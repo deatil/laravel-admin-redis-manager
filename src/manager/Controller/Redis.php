@@ -1,6 +1,6 @@
 <?php
 
-namespace Lake\Admin\RedisManager;
+namespace Lake\Admin\RedisManager\Controller;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -9,7 +9,9 @@ use Illuminate\Routing\Controller as BaseController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 
-class RedisController extends BaseController
+use Lake\Admin\RedisManager\RedisManager;
+
+class Redis extends BaseController
 {
     /**
      * Index page.
@@ -116,7 +118,7 @@ class RedisController extends BaseController
     {
         $type = $request->get('type');
 
-        $this->manager()->{$type}()->store($request->all());
+        $this->manager()->{$type.'Data'}()->store($request->all());
         
         $redirect = $request->get('redirect');
         if ($redirect == 1) {
@@ -155,7 +157,7 @@ class RedisController extends BaseController
     {
         $type = $request->get('type');
 
-        return $this->manager()->{$type}()->remove($request->all());
+        return $this->manager()->{$type.'Data'}()->remove($request->all());
     }
 
     /**
@@ -165,12 +167,7 @@ class RedisController extends BaseController
      */
     public function update(Request $request)
     {
-        $type = $request->get('type');
-        if ($type == 'list') {
-            $type = 'lists';
-        }
-
-        $this->manager()->{$type}()->update($request->all());
+        $this->manager()->update($request);
         
         $redirect = $request->get('redirect');
         if ($redirect == 1) {
@@ -276,10 +273,12 @@ class RedisController extends BaseController
      *
      * @return RedisManager
      */
-    protected function manager()
+    protected function manager($conn = null)
     {
-        $conn = \request()->get('conn');
+        if (!$conn) {
+            $conn = request()->get('conn', 'default');
+        }
 
-        return RedisManager::instance('default');
+        return RedisManager::instance($conn);
     }
 }

@@ -7,11 +7,11 @@ use Illuminate\Support\Arr;
 class SortedSets extends DataType
 {
     /**
-     * {@inheritdoc}
+     * 查询方法 zrange（从小到大） | zrevrange (从大到小)
      */
     public function fetch($key)
     {
-        return $this->getClient()->zrange($key, 0, -1, ['WITHSCORES' => true]);
+        return $this->getClient()->zrevrange($key, 0, -1, ['WITHSCORES' => true]);
     }
 
     public function update(array $params)

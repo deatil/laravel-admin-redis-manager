@@ -21,6 +21,9 @@ use Lake\Admin\RedisManager\DataType\Sets;
 use Lake\Admin\RedisManager\DataType\SortedSets;
 use Lake\Admin\RedisManager\DataType\Strings;
 
+use Lake\Admin\RedisManager\Traits\BootExtension;
+
+
 /**
  * Class RedisManager.
  */
@@ -89,7 +92,7 @@ class RedisManager extends Extension
     /**
      * @return Lists
      */
-    public function lists()
+    public function listData()
     {
         return new Lists($this->getConnection());
     }
@@ -97,7 +100,7 @@ class RedisManager extends Extension
     /**
      * @return Strings
      */
-    public function string()
+    public function stringData()
     {
         return new Strings($this->getConnection());
     }
@@ -105,7 +108,7 @@ class RedisManager extends Extension
     /**
      * @return Hashes
      */
-    public function hash()
+    public function hashData()
     {
         return new Hashes($this->getConnection());
     }
@@ -113,7 +116,7 @@ class RedisManager extends Extension
     /**
      * @return Sets
      */
-    public function set()
+    public function setData()
     {
         return new Sets($this->getConnection());
     }
@@ -121,7 +124,7 @@ class RedisManager extends Extension
     /**
      * @return SortedSets
      */
-    public function zset()
+    public function zsetData()
     {
         return new SortedSets($this->getConnection());
     }
@@ -151,16 +154,6 @@ class RedisManager extends Extension
             $this->connection = $connection;
         }
 
-        return $this->getClient();
-    }
-
-    /**
-     * Get a registered Client instance.
-     *
-     * @return Client
-     */
-    public function getClient()
-    {
         $param = $this->getConnections()[$this->connection];
         return new Client($param);
     }
@@ -172,7 +165,7 @@ class RedisManager extends Extension
      */
     public function getInformation()
     {
-        return $this->getClient()->info();
+        return $this->getConnection()->info();
     }
 
     /**
@@ -185,7 +178,7 @@ class RedisManager extends Extension
      */
     public function scan($pattern = '*', $count = 100)
     {
-        $client = $this->getClient();
+        $client = $this->getConnection();
         $keys = [];
 
         foreach (new Keyspace($client, $pattern) as $item) {
@@ -219,24 +212,16 @@ LUA;
      */
     public function fetch(string $key)
     {
-        $client = $this->getClient();
+        $client = $this->getConnection();
         if (!$client->exists($key)) {
             return [];
         }
 
         $type = $client->type($key)->__toString();
-        if ($type == 'list') {
-            $type = 'lists';
-        }
 
         /** @var DataType $class */
-        $class = $this->{$type}();
+        $class = $this->{$type.'Data'}();
 
-        $options = $this->getConnections()['options'];
-        $prefix = $options['prefix'];
-        if($prefix){
-            $key = ltrim($key, $prefix);
-        }
         $value = $class->fetch($key);
         $ttl = $class->ttl($key);
 
@@ -256,7 +241,7 @@ LUA;
         $type = $request->get('type');
 
         /** @var DataType $class */
-        $class = $this->{$type}();
+        $class = $this->{$type.'Data'}();
         $class->update($request->all());
 
         $class->setTtl($key, $request->get('ttl'));
@@ -275,7 +260,7 @@ LUA;
             $key = [$key];
         }
 
-        return $this->getClient()->del($key);
+        return $this->getConnection()->del($key);
     }
 
     /**
@@ -289,7 +274,7 @@ LUA;
     {
         $command = explode(' ', $command);
 
-        return $this->getClient()->executeRaw($command);
+        return $this->getConnection()->executeRaw($command);
     }
 
     /**

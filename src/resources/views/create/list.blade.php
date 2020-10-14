@@ -38,7 +38,7 @@
 
                 {{ csrf_field() }}
                 <input type="hidden" name="conn" value="{{ $conn }}">
-                <input type="hidden" name="type" value="lists">
+                <input type="hidden" name="type" value="list">
                 <input type="hidden" name="redirect" value="1">
             </div>
 
