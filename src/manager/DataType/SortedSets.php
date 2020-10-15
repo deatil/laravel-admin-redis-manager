@@ -63,4 +63,17 @@ class SortedSets extends DataType
 
         return $this->getClient()->zrem($key, $member);
     }
+    
+    /**
+     * 工具 
+     * zrange（从小到大） | zrevrange (从大到小)
+     */
+    public function tool($key, $order = 'desc')
+    {
+        if ($order == 'asc') {
+            return $this->getClient()->zrange($key, 0, -1, ['WITHSCORES' => true]);
+        } else {
+            return $this->getClient()->zrevrange($key, 0, -1, ['WITHSCORES' => true]);
+        }
+    }
 }

@@ -110,6 +110,107 @@ class Redis extends BaseController
     }
 
     /**
+     * zsethot page.
+     *
+     * @param Request $request
+     *
+     * @return Content
+     */
+    public function zsethot(Request $request)
+    {
+        return Admin::content(function (Content $content) use ($request) {
+            $connection = $request->get('conn', 'default');
+
+            $manager = $this->manager();
+
+            $vars = [
+                'conn'        => $connection,
+                'info'        => $manager->getInformation(),
+                'connections' => $manager->getConnections(),
+                'key'         => $request->get('key'),
+                'order'       => $request->get('order', 'desc'),
+                'data'        => $manager->zsetData()->tool($request->get('key'), $request->get('order', 'desc')),
+            ];
+
+            $view = 'lake-redis-manager::zsethot';
+
+            $content->header('Redis manager');
+            $content->description('ZSet hot');
+            $content->breadcrumb(
+                ['text' => 'Redis manager', 'url' => route('lake-redis-index', ['conn' => $connection])],
+                ['text' => 'ZSet hot']
+            );
+            $content->body(view($view, $vars));
+        });
+    }
+
+    /**
+     * setdata page.
+     *
+     * @param Request $request
+     *
+     * @return Content
+     */
+    public function setdata(Request $request)
+    {
+        return Admin::content(function (Content $content) use ($request) {
+            $connection = $request->get('conn', 'default');
+
+            $manager = $this->manager();
+            
+            $data = [];
+            $params = $request->all();
+            if (isset($params['key1']) 
+                && isset($params['key2']) 
+                && isset($params['action'])
+            ) {
+                if (in_array($params['action'], ['sdiffstore', 'sinterstore', 'sunionstore'])) {
+                    return redirect(route('lake-redis-set-data'));
+                }
+                
+                $data = $manager->setData()->tool($params);
+            }
+
+            $vars = [
+                'conn'        => $connection,
+                'info'        => $manager->getInformation(),
+                'connections' => $manager->getConnections(),
+                'params'      => $params,
+                'data'        => $data,
+            ];
+
+            $view = 'lake-redis-manager::setdata';
+
+            $content->header('Redis manager');
+            $content->description('Set data');
+            $content->breadcrumb(
+                ['text' => 'Redis manager', 'url' => route('lake-redis-index', ['conn' => $connection])],
+                ['text' => 'Set data']
+            );
+            $content->body(view($view, $vars));
+        });
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function setdataStore(Request $request)
+    {
+        $params = $request->all();
+        if (!(isset($params['key1']) 
+            && isset($params['key2']) 
+            && isset($params['action'])
+            && in_array($params['action'], ['sdiffstore', 'sinterstore', 'sunionstore'])
+        )) {
+            return redirect(route('lake-redis-set-data'));
+        }
+        
+        return $this->manager()->setData()->tool($params);
+    }
+
+    /**
      * @param Request $request
      *
      * @return mixed

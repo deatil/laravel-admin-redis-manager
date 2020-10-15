@@ -65,4 +65,27 @@ class Sets extends DataType
 
         return $this->getClient()->srem($key, $member);
     }
+    
+    /**
+     * 工具
+     * sdiff 差集，sinter 交集，sunion 并集
+     */
+    public function tool(array $params)
+    {
+        $key1 = $params['key1'];
+        $key2 = $params['key2'];
+        
+        $action = $params['action'];
+        if (in_array($action, ['sdiff', 'sinter', 'sunion'])) {
+            return $this->getClient()->{$action}($key1, $key2);
+        } elseif (in_array($action, ['sdiffstore', 'sinterstore', 'sunionstore'])) {
+            if (!isset($params['storekey'])) {
+               return false; 
+            }
+            $storekey = $params['storekey'];
+            return $this->getClient()->{$action}($storekey, $key1, $key2);
+        }
+        
+        return false;
+    }
 }

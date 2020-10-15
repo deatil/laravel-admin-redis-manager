@@ -3,11 +3,18 @@
     <div class="col-md-3">
         <div class="box with-border">
             <div class="box-header with-border">
-                <h3 class="box-title">Connections</h3>
+                <h3 class="box-title">
+                    Connections
+                    
+                    <a href="">
+                        <small>
+                            <code>管理</code>
+                        </small>
+                    </a>
+                </h3>
 
                 <div class="box-tools">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                 </div>
             </div>
             <div class="box-body no-padding">
@@ -28,12 +35,17 @@
 
         <div class="box box-default collapsed-box">
             <div class="box-header with-border">
-                <h3 class="box-title">Connection <small><code>{{ $conn }}</code></small></h3>
+                <h3 class="box-title">
+                    Connection 
+                    <small>
+                        <code>{{ $conn }}</code>
+                    </small>
+                </h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-plus"></i>
                     </button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                 </div>
             </div>
 
@@ -54,10 +66,20 @@
             <!-- /.box-body -->
         </div>
 
-        <div class="box with-border"style="min-height:210px;word-wrap:break-word;">
+        <div class="box box-default collapsed-box" style="min-height:35px;word-wrap:break-word;">
             <div class="box-header with-border">
                 <h3 class="box-title">Information</h3>
+                
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
             </div>
+            
             <!-- /.box-header -->
             <div class="box-body no-padding" >
                 <div class="box-group" id="accordion">
@@ -74,7 +96,7 @@
                             <div id="collapse{{ $part }}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                 <div class="box-body no-padding no-border">
                                     <div class="table-responsive">
-                        <table class="table table-striped no-margin">
+                                        <table class="table table-striped no-margin">
                                             @foreach($detail as $key => $value)
                                                 <tr>
                                                     <td>{{ $key }}</td>
@@ -94,6 +116,32 @@
                         </div>
                     @endforeach
                 </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        
+        <div class="box with-border">
+            <div class="box-header with-border">
+                <h3 class="box-title">Tools</h3>
+
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body no-padding">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="tool-zset-hot">
+                        <a href=" {{ route('lake-redis-zset-hot') }}">
+                            <i class="fa fa-bolt" style="width: 18px;"></i> ZSet Hot
+                        </a>
+                    </li>
+                    <li class="tool-set-data">
+                        <a href=" {{ route('lake-redis-set-data') }}">
+                            <i class="fa fa-exchange" style="width: 18px;"></i> Set Data
+                        </a>
+                    </li>
+                </ul>
             </div>
             <!-- /.box-body -->
         </div>

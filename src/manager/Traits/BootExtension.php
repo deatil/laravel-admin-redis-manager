@@ -34,6 +34,10 @@ trait BootExtension
 
                 $router->get('lake-redis/console', 'Redis@console')->name('lake-redis-console');
                 $router->post('lake-redis/console', 'Redis@execute')->name('lake-redis-execute');
+                
+                $router->get('lake-redis/zset-hot', 'Redis@zsethot')->name('lake-redis-zset-hot');
+                $router->get('lake-redis/set-data', 'Redis@setdata')->name('lake-redis-set-data');
+                $router->post('lake-redis/set-data', 'Redis@setdataStore')->name('lake-redis-set-data-store');
             });
         });
     }
