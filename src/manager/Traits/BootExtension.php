@@ -2,6 +2,8 @@
 
 namespace Lake\Admin\RedisManager\Traits;
 
+use Illuminate\Support\Facades\Artisan;
+
 use Encore\Admin\Admin;
 
 trait BootExtension
@@ -35,9 +37,11 @@ trait BootExtension
                 $router->get('lake-redis/console', 'Redis@console')->name('lake-redis-console');
                 $router->post('lake-redis/console', 'Redis@execute')->name('lake-redis-execute');
                 
-                $router->get('lake-redis/zset-hot', 'Redis@zsethot')->name('lake-redis-zset-hot');
-                $router->get('lake-redis/set-data', 'Redis@setdata')->name('lake-redis-set-data');
-                $router->post('lake-redis/set-data', 'Redis@setdataStore')->name('lake-redis-set-data-store');
+                $router->get('lake-redis/tool/zset-hot', 'Redis@zsethot')->name('lake-redis-tool-zset-hot');
+                $router->get('lake-redis/tool/set-data', 'Redis@setdata')->name('lake-redis-tool-set-data');
+                $router->post('lake-redis/tool/set-data', 'Redis@setdataStore')->name('lake-redis-tool-set-data-store');
+                
+                $router->resource('lake-redis/connection', 'Connection')->names('lake-redis-connection');
             });
         });
     }
@@ -47,6 +51,8 @@ trait BootExtension
      */
     public static function import()
     {
+        Artisan::call('lake-redis-manager:install');
+        
         parent::createMenu('Redis manager', 'lake-redis', 'fa-database');
 
         parent::createPermission('Redis Manager', 'ext.lake-redis-manager', 'lake-redis*');

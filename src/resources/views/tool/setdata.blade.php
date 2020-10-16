@@ -42,12 +42,12 @@
 
                 <div class="col-sm-10">
                     <select style="width: 120px" class="action" name="action">
-                        <option value="sdiff" @if(isset($params['action']) && $params['action'] == 'sdiff')selected="selected"@endif>差集</option>
-                        <option value="sinter" @if(isset($params['action']) && $params['action'] == 'sinter')selected="selected"@endif>交集</option>
-                        <option value="sunion" @if(isset($params['action']) && $params['action'] == 'sunion')selected="selected"@endif>并集</option>
-                        <option value="sdiffstore" @if(isset($params['action']) && $params['action'] == 'sdiffstore')selected="selected"@endif>差集并存储</option>
-                        <option value="sinterstore" @if(isset($params['action']) && $params['action'] == 'sinterstore')selected="selected"@endif>交集并存储</option>
-                        <option value="sunionstore" @if(isset($params['action']) && $params['action'] == 'sunionstore')selected="selected"@endif>并集并存储</option>
+                        <option value="sdiff" @if(isset($params['action']) && $params['action'] == 'sdiff')selected="selected"@endif>Sdiff</option>
+                        <option value="sinter" @if(isset($params['action']) && $params['action'] == 'sinter')selected="selected"@endif>Sinter</option>
+                        <option value="sunion" @if(isset($params['action']) && $params['action'] == 'sunion')selected="selected"@endif>Sunion</option>
+                        <option value="sdiffstore" @if(isset($params['action']) && $params['action'] == 'sdiffstore')selected="selected"@endif>Sdiffstore</option>
+                        <option value="sinterstore" @if(isset($params['action']) && $params['action'] == 'sinterstore')selected="selected"@endif>Sinterstore</option>
+                        <option value="sunionstore" @if(isset($params['action']) && $params['action'] == 'sunionstore')selected="selected"@endif>Sunionstore</option>
                     </select>
             
                     <button type="button" class="btn btn-primary zsethot-submit">Submit</button>
@@ -127,6 +127,7 @@
                 || action == 'sunionstore'
             ) {
                 var params = {
+                    conn: '{{ $conn }}',
                     key1: key1,
                     key2: key2,
                     storekey: storekey,
@@ -135,7 +136,7 @@
                 };
 
                 $.ajax({
-                    url: '{{ route('lake-redis-set-data-store') }}',
+                    url: '{{ route('lake-redis-tool-set-data-store') }}',
                     type: 'POST',
                     data: params,
                     success: function(result) {
@@ -144,7 +145,8 @@
                     }
                 });
             } else {
-                var url = '{{ route("lake-redis-set-data") }}?key1=' + key1 
+                var url = '{{ route("lake-redis-tool-set-data") }}?conn={{ $conn }}' 
+                    + '&key1=' + key1 
                     + '&key2=' + key2 
                     + '&storekey=' + storekey 
                     + '&action=' + action;

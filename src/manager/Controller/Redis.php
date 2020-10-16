@@ -24,19 +24,29 @@ class Redis extends BaseController
             $content->header('Redis manager');
             $content->description('Connections');
             $content->breadcrumb(['text' => 'Redis manager']);
-            $connection = request('conn', 'default');
-            $manager = $this->manager();
-            $variables = [
-                'conn'        => $connection,
-                'info'        => $manager->getInformation(),
-                'connections' => $manager->getConnections(),
-                'keys'        => $manager->scan(
-                    request('pattern', '*'),
-                    request('count', 50)
-                ),
-            ];
+            $connection = request('conn', '');
             
-            $content->body(view('lake-redis-manager::index', $variables));
+            if (!empty($connection)) {
+                $manager = $this->manager();
+                $variables = [
+                    'conn'        => $connection,
+                    'info'        => $manager->getInformation(),
+                    'connections' => $manager->getConnections(),
+                    'keys'        => $manager->scan(
+                        request('pattern', '*'),
+                        request('count', 50)
+                    ),
+                ];
+                
+                $content->body(view('lake-redis-manager::index', $variables));
+            } else {
+                $manager = $this->manager();
+                $variables = [
+                    'connections' => $manager->getConnections(),
+                ];
+                
+                $content->body(view('lake-redis-manager::connections', $variables));
+            }
         });
     }
 
@@ -50,7 +60,7 @@ class Redis extends BaseController
     public function edit(Request $request)
     {
         return Admin::content(function (Content $content) use ($request) {
-            $connection = $request->get('conn', 'default');
+            $connection = $request->get('conn', '');
 
             $manager = $this->manager();
 
@@ -69,7 +79,12 @@ class Redis extends BaseController
             $content->header('Redis manager');
             $content->description('Connections');
             $content->breadcrumb(
-                ['text' => 'Redis manager', 'url' => route('lake-redis-index', ['conn' => $connection])],
+                [
+                    'text' => 'Redis manager', 
+                    'url' => route('lake-redis-index', [
+                        'conn' => $connection
+                    ])
+                ],
                 ['text' => 'Edit']
             );
             $content->body(view($view, $variables));
@@ -86,7 +101,7 @@ class Redis extends BaseController
     public function create(Request $request)
     {
         return Admin::content(function (Content $content) use ($request) {
-            $connection = $request->get('conn', 'default');
+            $connection = $request->get('conn', '');
 
             $manager = $this->manager();
 
@@ -119,7 +134,7 @@ class Redis extends BaseController
     public function zsethot(Request $request)
     {
         return Admin::content(function (Content $content) use ($request) {
-            $connection = $request->get('conn', 'default');
+            $connection = $request->get('conn', '');
 
             $manager = $this->manager();
 
@@ -132,12 +147,17 @@ class Redis extends BaseController
                 'data'        => $manager->zsetData()->tool($request->get('key'), $request->get('order', 'desc')),
             ];
 
-            $view = 'lake-redis-manager::zsethot';
+            $view = 'lake-redis-manager::tool.zsethot';
 
             $content->header('Redis manager');
             $content->description('ZSet hot');
             $content->breadcrumb(
-                ['text' => 'Redis manager', 'url' => route('lake-redis-index', ['conn' => $connection])],
+                [
+                    'text' => 'Redis manager', 
+                    'url' => route('lake-redis-index', [
+                        'conn' => $connection
+                    ])
+                ],
                 ['text' => 'ZSet hot']
             );
             $content->body(view($view, $vars));
@@ -154,7 +174,7 @@ class Redis extends BaseController
     public function setdata(Request $request)
     {
         return Admin::content(function (Content $content) use ($request) {
-            $connection = $request->get('conn', 'default');
+            $connection = $request->get('conn', '');
 
             $manager = $this->manager();
             
@@ -165,7 +185,7 @@ class Redis extends BaseController
                 && isset($params['action'])
             ) {
                 if (in_array($params['action'], ['sdiffstore', 'sinterstore', 'sunionstore'])) {
-                    return redirect(route('lake-redis-set-data'));
+                    return redirect(route('lake-redis-tool-set-data'));
                 }
                 
                 $data = $manager->setData()->tool($params);
@@ -179,12 +199,17 @@ class Redis extends BaseController
                 'data'        => $data,
             ];
 
-            $view = 'lake-redis-manager::setdata';
+            $view = 'lake-redis-manager::tool.setdata';
 
             $content->header('Redis manager');
             $content->description('Set data');
             $content->breadcrumb(
-                ['text' => 'Redis manager', 'url' => route('lake-redis-index', ['conn' => $connection])],
+                [
+                    'text' => 'Redis manager', 
+                    'url' => route('lake-redis-index', [
+                        'conn' => $connection
+                    ])
+                ],
                 ['text' => 'Set data']
             );
             $content->body(view($view, $vars));
@@ -204,7 +229,7 @@ class Redis extends BaseController
             && isset($params['action'])
             && in_array($params['action'], ['sdiffstore', 'sinterstore', 'sunionstore'])
         )) {
-            return redirect(route('lake-redis-set-data'));
+            return redirect(route('lake-redis-tool-set-data'));
         }
         
         return $this->manager()->setData()->tool($params);
@@ -288,7 +313,7 @@ class Redis extends BaseController
     public function console(Request $request)
     {
         return Admin::content(function (Content $content) use ($request) {
-            $connection = $request->get('conn', 'default');
+            $connection = $request->get('conn', '');
 
             $manager = $this->manager();
 
@@ -303,7 +328,12 @@ class Redis extends BaseController
             $content->header('Redis manager');
             $content->description('Connections');
             $content->breadcrumb(
-                ['text' => 'Redis manager', 'url' => route('lake-redis-index', ['conn' => $connection])],
+                [
+                    'text' => 'Redis manager', 
+                    'url' => route('lake-redis-index', [
+                        'conn' => $connection
+                    ])
+                ],
                 ['text' => 'Console']
             );
             $content->body(view($view, $vars));
@@ -377,7 +407,7 @@ class Redis extends BaseController
     protected function manager($conn = null)
     {
         if (!$conn) {
-            $conn = request()->get('conn', 'default');
+            $conn = request()->get('conn', '');
         }
 
         return RedisManager::instance($conn);

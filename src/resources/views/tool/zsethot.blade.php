@@ -26,8 +26,8 @@
 
                 <div class="col-sm-10">
                     <select style="width: 120px" class="order" name="order">
-                        <option value="asc" selected="selected">顺序</option>
-                        <option value="desc">倒叙</option>
+                        <option value="asc" @if($order == 'asc')selected="selected"@endif>Order asc</option>
+                        <option value="desc" @if($order == 'desc')selected="selected"@endif>Order desc</option>
                     </select>
             
                     <button type="button" class="btn btn-primary zsethot-submit">Submit</button>
@@ -95,7 +95,7 @@
             var key = $('input.key').val();
             var order = $('select.order option:selected').val();
             
-            var url = '{{ route("lake-redis-zset-hot") }}?key=' + key + '&order=' + order;
+            var url = '{{ route("lake-redis-tool-zset-hot") }}?conn={{ $conn }}&key=' + key + '&order=' + order;
             
             location.href = url;
         });
@@ -113,9 +113,9 @@
                 .then(function(){
 
                     var params = {
+                        conn: "{{ $conn }}",
                         key: key,
                         member: member,
-                        connection: "{{ $conn }}",
                         type: 'zset',
                         _token: LA.token
                     };

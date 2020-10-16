@@ -3,6 +3,7 @@
 namespace Lake\Admin\RedisManager;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
@@ -22,6 +23,7 @@ use Lake\Admin\RedisManager\DataType\SortedSets;
 use Lake\Admin\RedisManager\DataType\Strings;
 
 use Lake\Admin\RedisManager\Traits\BootExtension;
+use Lake\Admin\RedisManager\Model\Connection as ConnectionModel;
 
 
 /**
@@ -136,9 +138,23 @@ class RedisManager extends Extension
      */
     public function getConnections()
     {
-        return collect(config('database.redis'))->filter(function ($conn) {
+        // $arr = config('database.redis');
+        $arr = ConnectionModel::where('status', 1)
+            ->get(['name', 'url', 'host', 'password', 'port', 'database'])
+            ->toArray();
+            
+        return collect($arr)->filter(function ($conn) {
             return is_array($conn);
-        });
+        })->reduce(function($lookup, $item) {
+            $lookup[$item['name']] = [
+                'url' => $item['url'],
+                'host' => $item['host'],
+                'password' => $item['password'],
+                'port' => $item['port'],
+                'database' => $item['database'],
+            ];
+            return $lookup;
+        }, []);
     }
 
     /**
@@ -154,7 +170,14 @@ class RedisManager extends Extension
             $this->connection = $connection;
         }
 
-        $param = $this->getConnections()[$this->connection];
+        $connections = $this->getConnections();
+        if (!isset($connections[$this->connection])) {
+            $url = route('lake-redis-index');
+            $response = response('', 200, ['Location' => $url]);
+            throw new HttpResponseException($response);
+        }
+        
+        $param = $connections[$this->connection];
         return new Client($param);
     }
 

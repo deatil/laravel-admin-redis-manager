@@ -6,7 +6,7 @@
                 <h3 class="box-title">
                     Connections
                     
-                    <a href="">
+                    <a href="{{ url('admin/lake-redis/connection') }}">
                         <small>
                             <code>管理</code>
                         </small>
@@ -132,12 +132,12 @@
             <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
                     <li class="tool-zset-hot">
-                        <a href=" {{ route('lake-redis-zset-hot') }}">
+                        <a href=" {{ route('lake-redis-tool-zset-hot', ['conn' => $conn]) }}">
                             <i class="fa fa-bolt" style="width: 18px;"></i> ZSet Hot
                         </a>
                     </li>
                     <li class="tool-set-data">
-                        <a href=" {{ route('lake-redis-set-data') }}">
+                        <a href=" {{ route('lake-redis-tool-set-data', ['conn' => $conn]) }}">
                             <i class="fa fa-exchange" style="width: 18px;"></i> Set Data
                         </a>
                     </li>
