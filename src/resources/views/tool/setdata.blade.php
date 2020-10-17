@@ -50,7 +50,10 @@
                         <option value="sunionstore" @if(isset($params['action']) && $params['action'] == 'sunionstore')selected="selected"@endif>Sunionstore</option>
                     </select>
                     
-                    <button type="button" class="btn btn-danger zsethot-exchange">Exchange</button>
+                    <button type="button" class="btn btn-danger zsethot-exchange">
+                        <i class="fa fa-exchange"></i>
+                        Exchange
+                    </button>
             
                     <button type="button" class="btn btn-primary zsethot-submit">Submit</button>
                 </div>

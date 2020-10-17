@@ -304,6 +304,18 @@ class Redis extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function rename(Request $request)
+    {
+        $oldkey = $request->get('oldkey');
+        $newkey = $request->get('value');
+        $this->manager()->rename($oldkey, $newkey);
+    }
+
+    /**
      * Redis console interface.
      *
      * @param Request $request

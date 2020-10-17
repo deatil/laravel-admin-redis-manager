@@ -288,6 +288,19 @@ LUA;
     }
 
     /**
+     * rename.
+     *
+     * @param string $oldkey
+     * @param string $newkey
+     *
+     * @return mixed
+     */
+    public function rename($oldkey, $newkey)
+    {
+        return $this->getConnection()->rename($oldkey, $newkey);
+    }
+
+    /**
      * 运行redis命令.
      *
      * @param string $command

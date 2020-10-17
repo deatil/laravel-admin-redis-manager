@@ -33,6 +33,7 @@ trait BootExtension
                 $router->get('lake-redis/edit', 'Redis@edit')->name('lake-redis-edit-key');
                 $router->put('lake-redis/key', 'Redis@update')->name('lake-redis-update-key');
                 $router->delete('lake-redis/item', 'Redis@remove')->name('lake-redis-remove-item');
+                $router->put('lake-redis/rename', 'Redis@rename')->name('lake-redis-rename');
 
                 $router->get('lake-redis/console', 'Redis@console')->name('lake-redis-console');
                 $router->post('lake-redis/console', 'Redis@execute')->name('lake-redis-execute');

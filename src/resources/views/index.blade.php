@@ -71,10 +71,14 @@
             @foreach($keys as $index => $key)
                 <tr>
                     <td><input type="checkbox" class="key-select" data-key="{{ $key[0] }}"></td>
-                    <td><code>{{ $key[0] }}</code></td>
+                    <td>
+                        <code>
+                            <a class="data-name" data-type="textarea" data-pk="{{ $key[0] }}" data-url="{{ route('lake-redis-rename', ['conn' => $conn, 'oldkey' => $key[0]]) }}">{{ $key[0] }}</a></td>
+                        </code>
+                    </td>
                     <td>
                         @php($type = $key[1]->getPayload())
-                            <span class="label label-{{ \Lake\Admin\RedisManager\RedisManager::typeColor($type) }}">{{ $type }}</span>
+                        <span class="label label-{{ \Lake\Admin\RedisManager\RedisManager::typeColor($type) }}">{{ $type }}</span>
                     </td>
                     <td>{{ $key[2] }}</td>
                     <td>
@@ -105,6 +109,8 @@
 
 <script>
     $(function () {
+        
+        $('.data-name').editable();
 
         $('a.key-delete').on('click', function (e) {
 
