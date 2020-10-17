@@ -21,10 +21,8 @@ use Lake\Admin\RedisManager\DataType\Lists;
 use Lake\Admin\RedisManager\DataType\Sets;
 use Lake\Admin\RedisManager\DataType\SortedSets;
 use Lake\Admin\RedisManager\DataType\Strings;
-
 use Lake\Admin\RedisManager\Traits\BootExtension;
 use Lake\Admin\RedisManager\Model\Connection as ConnectionModel;
-
 
 /**
  * Class RedisManager.
@@ -134,11 +132,13 @@ class RedisManager extends Extension
     /**
      * Get connection collections.
      *
+     * laravel redis config: 
+     * $arr = config('database.redis');
+     *
      * @return Collection
      */
     public function getConnections()
     {
-        // $arr = config('database.redis');
         $arr = ConnectionModel::where('status', 1)
             ->get(['name', 'url', 'host', 'password', 'port', 'database'])
             ->toArray();
@@ -172,8 +172,9 @@ class RedisManager extends Extension
 
         $connections = $this->getConnections();
         if (!isset($connections[$this->connection])) {
-            $url = route('lake-redis-index');
-            $response = response('', 200, ['Location' => $url]);
+            $response = response('', 200, [
+                'Location' => route('lake-redis-index')
+            ]);
             throw new HttpResponseException($response);
         }
         

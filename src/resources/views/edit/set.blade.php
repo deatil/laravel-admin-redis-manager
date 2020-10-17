@@ -95,6 +95,9 @@
                         success: function(result) {
                             toastr.success('Push success.');
                             $.pjax.reload('#pjax-container');
+                        },
+                        error: function() {
+                            toastr.success('Push error.');
                         }
                     });
                 }
@@ -117,6 +120,9 @@
                     success: function(result) {
                         toastr.success('List item removed');
                         $.pjax.reload('#pjax-container');
+                    },
+                    error: function() {
+                        toastr.success('List item remove error.');
                     }
                 });
 

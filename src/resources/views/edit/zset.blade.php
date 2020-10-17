@@ -166,6 +166,9 @@
                     success: function(result) {
                         toastr.success('Add success.');
                         $.pjax.reload('#pjax-container');
+                    },
+                    error: function() {
+                        toastr.success('Add error.');
                     }
                 });
 

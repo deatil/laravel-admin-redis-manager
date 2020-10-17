@@ -13,7 +13,7 @@ class Conn extends AbstractTool
         $html = <<<EOF
 <div class="btn-group">   
     <a class="btn btn-sm bg-green" href="{$url}" rel="external nofollow" >
-        Manager
+        <i class="fa fa-database"></i>&nbsp;&nbsp;Manager
     </a> 
 </div> 
         

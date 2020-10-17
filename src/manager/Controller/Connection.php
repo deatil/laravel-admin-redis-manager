@@ -131,7 +131,7 @@ class Connection
         $form->text('host')->rules('required');
         $form->text('password');
         $form->text('port')->rules('required');
-        $form->text('database')->rules('required');
+        $form->text('database')->rules('required|numeric');
         $form->radio('status', '状态')
             ->options([
                 '1' => '启用',

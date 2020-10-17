@@ -158,6 +158,9 @@
                 success: function(result) {
                     toastr.success('Push success.');
                     $.pjax({container:'#pjax-container', url: '{{ route('lake-redis-edit-key') }}' + '?conn={{ $conn }}&key='+key });
+                },
+                error: function() {
+                    toastr.success('Push error.');
                 }
             });
 

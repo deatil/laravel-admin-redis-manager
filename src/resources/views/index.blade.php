@@ -78,6 +78,11 @@
                     </td>
                     <td>{{ $key[2] }}</td>
                     <td>
+                        @if($type=='zset')
+                        <a href="{{ route('lake-redis-tool-zset-hot', ['key' => $key[0], 'conn' => $conn]) }}"><i class="fa fa-bolt"></i></a>
+                        &nbsp;
+                        @endif
+                        
                         <a href="{{ route('lake-redis-edit-key', ['key' => $key[0], 'conn' => $conn]) }}"><i class="fa fa-edit"></i></a>
                         &nbsp;
                         <a href="#" class="key-delete" data-key="{{ $key[0] }}"><i class="fa fa-trash"></i></a>

@@ -49,6 +49,8 @@
                         <option value="sinterstore" @if(isset($params['action']) && $params['action'] == 'sinterstore')selected="selected"@endif>Sinterstore</option>
                         <option value="sunionstore" @if(isset($params['action']) && $params['action'] == 'sunionstore')selected="selected"@endif>Sunionstore</option>
                     </select>
+                    
+                    <button type="button" class="btn btn-danger zsethot-exchange">Exchange</button>
             
                     <button type="button" class="btn btn-primary zsethot-submit">Submit</button>
                 </div>
@@ -112,6 +114,16 @@
             } else {
                 $('.tool-storekey').addClass('hidden');
             }
+        });
+        
+        $('.zsethot-exchange').on('click', function (event) {
+            event.preventDefault();
+            
+            var key1 = $('input.key1').val();
+            var key2 = $('input.key2').val();
+            
+            $('input.key1').val(key2);
+            $('input.key2').val(key1).trigger('focus');
         });
         
         $('.zsethot-submit').on('click', function (event) {
