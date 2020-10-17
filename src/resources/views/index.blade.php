@@ -73,7 +73,7 @@
                     <td><input type="checkbox" class="key-select" data-key="{{ $key[0] }}"></td>
                     <td>
                         <code>
-                            <a class="data-name" data-type="textarea" data-pk="{{ $key[0] }}" data-url="{{ route('lake-redis-rename', ['conn' => $conn, 'oldkey' => $key[0]]) }}">{{ $key[0] }}</a></td>
+                            <a class="data-name" data-type="textarea" data-pk="{{ $key[0] }}" data-url="{{ route('lake-redis-rename', ['conn' => $conn, 'oldkey' => $key[0]]) }}">{{ $key[0] }}</a>
                         </code>
                     </td>
                     <td>
