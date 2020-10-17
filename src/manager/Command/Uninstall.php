@@ -10,9 +10,9 @@ use Encore\Admin\Auth\Database\Menu;
 use Encore\Admin\Auth\Database\Permission;
 
 /**
- * 卸载
+ * uninstall
  *
- * php artisan lapi:uninstall
+ * php artisan lake-redis-manager:uninstall
  */
 class Uninstall extends Command
 {

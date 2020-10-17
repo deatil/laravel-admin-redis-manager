@@ -5,6 +5,11 @@ namespace Lake\Admin\RedisManager\Command;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * install
+ *
+ * php artisan lake-redis-manager:install
+ */
 class Install extends Command
 {
     /**
