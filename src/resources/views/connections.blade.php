@@ -6,9 +6,9 @@
                 <h3 class="box-title">
                     Connections
                     
-                    <a href="{{ url('admin/lake-redis/connection') }}">
+                    <a href="{{ url(config('admin.route.prefix').'/lake-redis/connection') }}">
                         <small>
-                            <code>管理</code>
+                            <code>Setting</code>
                         </small>
                     </a>
                 </h3>
