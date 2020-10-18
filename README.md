@@ -2,7 +2,7 @@ Redis manager for laravel-admin
 ========================
 
 ## Screenshot
-![redis-manager](https://user-images.githubusercontent.com/24578855/96161244-9a425600-0f49-11eb-8a9c-c1654f6373fa.png)
+![redis-manager](https://user-images.githubusercontent.com/24578855/96372558-f4395a80-1199-11eb-85f8-7fed24dfe479.png)
 
 ## Require
 ```
