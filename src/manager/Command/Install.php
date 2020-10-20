@@ -24,7 +24,7 @@ class Install extends Command
      *
      * @var string
      */
-    protected $description = 'lake-redis-manager 扩展安装';
+    protected $description = 'lake-redis-manager extension install';
 
     /**
      * Execute the console command.
@@ -33,13 +33,12 @@ class Install extends Command
      */
     public function handle()
     {
-        // 执行数据库
         $installSqlFile = __DIR__.'/../../resources/sql/install.sql';
         $dbPrefix = DB::getConfig('prefix');
         $sqls = file_get_contents($installSqlFile);
         $sqls = str_replace('pre__', $dbPrefix, $sqls);
         DB::unprepared($sqls);
         
-        $this->info('lake-redis-manager 扩展安装成功');
+        $this->info('lake-redis-manager extension install success.');
     }
 }

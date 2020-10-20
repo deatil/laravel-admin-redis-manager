@@ -122,7 +122,7 @@
                         var params = {
                             key: key,
                             field: field,
-                            connection: "{{ $conn }}",
+                            conn: "{{ $conn }}",
                             type: 'hash',
                             _token: LA.token
                         };

@@ -122,7 +122,7 @@
                         var params = {
                             key: key,
                             member: member,
-                            connection: "{{ $conn }}",
+                            conn: "{{ $conn }}",
                             type: 'zset',
                             _token: LA.token
                         };

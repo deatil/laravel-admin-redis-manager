@@ -115,7 +115,7 @@
                         key: key,
                         index: index,
                         type: 'list',
-                        connection: "{{ $conn }}",
+                        conn: "{{ $conn }}",
                         _token: LA.token
                     };
 

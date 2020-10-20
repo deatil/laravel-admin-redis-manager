@@ -56,6 +56,6 @@ trait BootExtension
         
         parent::createMenu('Redis manager', 'lake-redis', 'fa-database');
 
-        parent::createPermission('Redis Manager', 'ext.lake-redis-manager', 'lake-redis*');
+        parent::createPermission('Redis Manager', 'ext.lake-redis', 'lake-redis*');
     }
 }

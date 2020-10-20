@@ -28,7 +28,7 @@ class Uninstall extends Command
      *
      * @var string
      */
-    protected $description = 'lake-redis-manager 扩展卸载';
+    protected $description = 'lake-redis-manager extension uninstall';
 
     /**
      * Execute the console command.
@@ -37,7 +37,6 @@ class Uninstall extends Command
      */
     public function handle()
     {
-        // 执行sql
         $sqlFile = __DIR__.'/../../resources/sql/uninstall.sql';
         $dbPrefix = DB::getConfig('prefix');
         $sqls = file_get_contents($sqlFile);
@@ -46,9 +45,9 @@ class Uninstall extends Command
         
         $msg = Menu::where('uri', '=', 'lake-redis')
                 ->delete();
-        $msg = Permission::where('slug', '=', 'ext.lake-redis-manager')
+        $msg = Permission::where('slug', '=', 'ext.lake-redis')
                 ->delete();
             
-        $this->info('lake-redis-manager 扩展卸载成功');
+        $this->info('lake-redis-manager extension uninstall success.');
     }
 }

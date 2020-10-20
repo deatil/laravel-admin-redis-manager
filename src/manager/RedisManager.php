@@ -45,7 +45,7 @@ class RedisManager extends Extension
     /**
      * @var array
      */
-    protected $dataTyps = [
+    protected $dataTypes = [
         'string' => Strings::class,
         'hash'   => Hashes::class,
         'set'    => Sets::class,
@@ -301,7 +301,7 @@ LUA;
     }
 
     /**
-     * 运行redis命令.
+     * execute redis command.
      *
      * @param string $command
      *

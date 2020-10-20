@@ -109,7 +109,7 @@
                     key: key,
                     member: e.params.data.id,
                     type: 'set',
-                    connection: "{{ $conn }}",
+                    conn: "{{ $conn }}",
                     _token: LA.token
                 };
 
